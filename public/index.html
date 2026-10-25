@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DNA Spec Studio — Hierarchical specification-driven development environment for Pi and autonomous coding agents by sadhasri697.">
+  <meta name="keywords" content="DNA Spec, Pi agent, specification-driven development, sadhasri697, autonomous coding">
+  <title>DNA Spec Studio | Specification-Driven Development by sadhasri697</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="glow-orb glow-1" aria-hidden="true"></div>
+  <div class="glow-orb glow-2" aria-hidden="true"></div>
+  <div class="glow-orb glow-3" aria-hidden="true"></div>
+
+  <!-- Main Application Wrapper -->
+  <div class="app-layout">
+    
+    <!-- Header / Navigation Bar -->
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="brand">
+          <div class="brand-logo" id="brand-logo">
+            <svg class="dna-helix-svg" width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 3C8 3 8 9 12 9C16 9 16 15 20 15" stroke="url(#helixGrad1)" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M20 3C16 3 16 9 12 9C8 9 8 15 4 15" stroke="url(#helixGrad2)" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="8" cy="6" r="2" fill="#6366f1"/>
+              <circle cx="16" cy="12" r="2" fill="#06b6d4"/>
+              <circle cx="12" cy="9" r="2" fill="#a855f7"/>
+              <defs>
+                <linearGradient id="helixGrad1" x1="4" y1="3" x2="20" y2="15" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#6366f1"/>
+                  <stop offset="1" stop-color="#06b6d4"/>
+                </linearGradient>
+                <linearGradient id="helixGrad2" x1="20" y1="3" x2="4" y2="15" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#a855f7"/>
+                  <stop offset="1" stop-color="#ec4899"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="brand-info">
+            <div class="brand-title-row">
+              <span class="brand-title">DNA Spec Studio</span>
+              <span class="brand-pill">v0.1.0</span>
+            </div>
+            <span class="brand-tagline">Hierarchical Specification Engine for Pi</span>
+          </div>
+        </div>
+
+        <div class="header-center">
+          <div class="author-badge" id="author-badge">
+            <span class="author-icon">👤</span>
+            <span class="author-label">Author:</span>
+            <a href="https://github.com/sadhasri697/DNA-spec-main" target="_blank" rel="noopener noreferrer" class="author-name">sadhasri697</a>
+          </div>
+          <div class="status-indicator-chip" id="status-chip">
+            <span class="status-dot pulse-emerald"></span>
+            <span class="status-text" id="server-status-text">Backend Active</span>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button class="btn btn-secondary btn-sm" id="btn-quick-test" title="Run Vitest suite">
+            <span class="btn-icon">⚡</span> Run Test Suite
+          </button>
+          <a href="https://github.com/sadhasri697/DNA-spec-main" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" id="btn-github-repo">
+            <span class="btn-icon">📦</span> GitHub Repo
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Fundamental Rule Bar / Pipeline Visualizer -->
+    <section class="pipeline-section">
+      <div class="pipeline-card">
+        <div class="pipeline-rule">
+          <span class="rule-icon">💎</span>
+          <span class="rule-text"><strong>The Fundamental Rule:</strong> No code change should occur without a DNA change.</span>
+        </div>
+        <div class="pipeline-steps" id="pipeline-steps">
+          <div class="step-chip active" title="Discovery Phase">
+            <span class="step-num">💬</span>
+            <span class="step-name">Conversation</span>
+          </div>
+          <span class="step-arrow">→</span>
+          <div class="step-chip active" title="Levels 0 to 4">
+            <span class="step-num">🧬</span>
+            <span class="step-name">DNA Spec</span>
+          </div>
+          <span class="step-arrow">→</span>
+          <div class="step-chip active" title="Milestones & Sequence">
+            <span class="step-num">🗺️</span>
+            <span class="step-name">Plan</span>
+          </div>
+          <span class="step-arrow">→</span>
+          <div class="step-chip active" title="Atomic Executable Tasks">
+            <span class="step-num">📋</span>
+            <span class="step-name">Tasks</span>
+          </div>
+          <span class="step-arrow">→</span>
+          <div class="step-chip stop-point" title="Agent stops here. You implement code.">
+            <span class="step-num">🛑</span>
+            <span class="step-name">Stop & Review</span>
+          </div>
+          <span class="step-arrow">→</span>
+          <div class="step-chip code-chip" title="Downstream derived artifact">
+            <span class="step-num">💻</span>
+            <span class="step-name">Code</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <nav class="app-nav" aria-label="Main Navigation">
+      <div class="tabs-container">
+        <button class="nav-tab active" id="tab-btn-explorer" data-tab="explorer">
+          <span class="tab-icon">🧬</span> Spec Explorer
+        </button>
+        <button class="nav-tab" id="tab-btn-generator" data-tab="generator">
+          <span class="tab-icon">✨</span> Spec Wizard
+        </button>
+        <button class="nav-tab" id="tab-btn-auditor" data-tab="auditor">
+          <span class="tab-icon">🛡️</span> Spec Auditor
+        </button>
+        <button class="nav-tab" id="tab-btn-diff" data-tab="diff">
+          <span class="tab-icon">🔄</span> Mini CI/CD Diff
+        </button>
+        <button class="nav-tab" id="tab-btn-cli" data-tab="cli">
+          <span class="tab-icon">🖥️</span> CLI & Terminal
+        </button>
+      </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="app-main">
+
+      <!-- ================= TAB 1: SPEC EXPLORER ================= -->
+      <section class="tab-panel active" id="panel-explorer">
+        <div class="panel-header-row">
+          <div>
+            <h1 class="panel-title">DNA Specification Explorer</h1>
+            <p class="panel-subtitle">Browse bundled reference implementations with full 5-level hierarchy and task decompositions.</p>
+          </div>
+          <div class="example-picker-box">
+            <label for="example-select" class="picker-label">Select Example:</label>
+            <select id="example-select" class="select-input">
+              <option value="saas-app" selected>saas-app (SaaS Standup Bot)</option>
+              <option value="cli-tool">cli-tool (tk Task Runner)</option>
+              <option value="api-service">api-service (Short-link API)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="explorer-grid">
+          <!-- Left: Spec Tree Navigator -->
+          <div class="explorer-sidebar card-glass">
+            <div class="sidebar-header">
+              <span class="sidebar-title">Hierarchy Tree</span>
+              <span class="badge badge-purple" id="tree-item-count">8 Levels</span>
+            </div>
+            <div class="tree-container" id="spec-tree">
+              <!-- Tree items rendered by app.js -->
+              <div class="tree-item active" data-file-key="vision">
+                <span class="tree-level-tag lvl-0">L0</span>
+                <span class="tree-label">Vision (vision.md)</span>
+              </div>
+              <div class="tree-item" data-file-key="domains">
+                <span class="tree-level-tag lvl-1">L1</span>
+                <span class="tree-label">Domains</span>
+                <span class="tree-sub-badge" id="count-domains">0</span>
+              </div>
+              <div class="tree-item" data-file-key="features">
+                <span class="tree-level-tag lvl-2">L2</span>
+                <span class="tree-label">Features</span>
+                <span class="tree-sub-badge" id="count-features">0</span>
+              </div>
+              <div class="tree-item" data-file-key="flows">
+                <span class="tree-level-tag lvl-3">L3</span>
+                <span class="tree-label">Flows</span>
+                <span class="tree-sub-badge" id="count-flows">0</span>
+              </div>
+              <div class="tree-item" data-file-key="requirements">
+                <span class="tree-level-tag lvl-4">L4</span>
+                <span class="tree-label">Requirements (requirements.md)</span>
+              </div>
+              <div class="tree-divider"></div>
+              <div class="tree-item" data-file-key="plan">
+                <span class="tree-level-tag lvl-impl">Plan</span>
+                <span class="tree-label">Implementation Plan</span>
+              </div>
+              <div class="tree-item" data-file-key="tasks">
+                <span class="tree-level-tag lvl-impl">Tasks</span>
+                <span class="tree-label">Implementation Tasks</span>
+              </div>
+              <div class="tree-item" data-file-key="agents">
+                <span class="tree-level-tag lvl-agents">Mem</span>
+                <span class="tree-label">AGENTS.md</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: File Viewer & Formatted Preview -->
+          <div class="explorer-content card-glass">
+            <div class="content-toolbar">
+              <div class="content-file-info">
+                <span class="file-icon">📄</span>
+                <span class="file-path-badge" id="current-file-path">dna/vision.md</span>
+                <span class="file-level-badge" id="current-level-badge">Level 0: Vision</span>
+              </div>
+              <div class="content-actions">
+                <button class="btn btn-ghost btn-sm" id="btn-copy-spec">
+                  <span class="btn-icon">📋</span> Copy Markdown
+                </button>
+              </div>
+            </div>
+            <div class="content-viewer">
+              <pre class="code-preview" id="spec-viewer-code">Loading specification...</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 2: SPEC GENERATOR WIZARD ================= -->
+      <section class="tab-panel" id="panel-generator">
+        <div class="panel-header-row">
+          <div>
+            <h2 class="panel-title">DNA Spec Generator Wizard</h2>
+            <p class="panel-subtitle">Create a complete, compliant 5-level DNA specification for your new software project.</p>
+          </div>
+          <button class="btn btn-primary" id="btn-generate-dna">
+            <span class="btn-icon">⚡</span> Synthesize DNA Spec
+          </button>
+        </div>
+
+        <div class="generator-grid">
+          <!-- Wizard Form -->
+          <form class="wizard-form card-glass" id="wizard-form" onsubmit="return false;">
+            <div class="form-section">
+              <h3 class="section-title"><span class="step-bubble">0</span> Project & Vision (Level 0)</h3>
+              <div class="form-group">
+                <label for="wizard-proj-name" class="form-label">Project Name</label>
+                <input type="text" id="wizard-proj-name" class="form-input" value="hyper-agent" placeholder="e.g. quantum-cache">
+              </div>
+              <div class="form-group">
+                <label for="wizard-mission" class="form-label">Mission Statement</label>
+                <textarea id="wizard-mission" class="form-textarea" rows="2" placeholder="Why does this system exist?">Autonomous AI coding orchestrator that synthesizes production software strictly from hierarchical DNA specifications.</textarea>
+              </div>
+              <div class="form-group">
+                <label for="wizard-goal" class="form-label">Success Goal</label>
+                <input type="text" id="wizard-goal" class="form-input" value="A developer can turn an idea into verifiable, zero-drift code with a single command.">
+              </div>
+              <div class="form-group">
+                <label for="wizard-nongoals" class="form-label">Non-Goals</label>
+                <input type="text" id="wizard-nongoals" class="form-input" value="- Monolithic prompt dumps; Ad-hoc untracked coding; Bypassing spec audits">
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="section-title"><span class="step-bubble">1</span> Domain Boundary (Level 1)</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="wizard-domain-name" class="form-label">Domain Name</label>
+                  <input type="text" id="wizard-domain-name" class="form-input" value="orchestration">
+                </div>
+                <div class="form-group">
+                  <label for="wizard-domain-resp" class="form-label">Responsibility</label>
+                  <input type="text" id="wizard-domain-resp" class="form-input" value="Parsing DNA hierarchy, validating cross-level invariants, and scheduling tasks">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="section-title"><span class="step-bubble">2</span> Core Feature & Flow (Levels 2 & 3)</h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="wizard-feat-name" class="form-label">Feature Name</label>
+                  <input type="text" id="wizard-feat-name" class="form-input" value="spec-compiler">
+                </div>
+                <div class="form-group">
+                  <label for="wizard-flow-name" class="form-label">User Flow</label>
+                  <input type="text" id="wizard-flow-name" class="form-input" value="create-and-verify-spec">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="wizard-feat-desc" class="form-label">Feature Capabilities</label>
+                <input type="text" id="wizard-feat-desc" class="form-input" value="Compiles natural conversation into Level 0-4 markdown files and emits implementation plan">
+              </div>
+            </div>
+
+            <div class="form-section">
+              <h3 class="section-title"><span class="step-bubble">3</span> Invariants & Requirements (Level 4)</h3>
+              <div class="form-group">
+                <label for="wizard-reqs" class="form-label">Immutable Invariants (comma separated)</label>
+                <textarea id="wizard-reqs" class="form-textarea" rows="2">No code change without a DNA change, All subtasks must be verifiable with automated vitest suites, Memory index must be tracked in AGENTS.md</textarea>
+              </div>
+            </div>
+          </form>
+
+          <!-- Live Generated Spec Output -->
+          <div class="wizard-preview card-glass">
+            <div class="preview-toolbar">
+              <span class="preview-title" id="generated-spec-title">Generated DNA Output</span>
+              <button class="btn btn-secondary btn-sm" id="btn-copy-generated">
+                <span class="btn-icon">📋</span> Copy All Files
+              </button>
+            </div>
+            <div class="preview-files-nav" id="gen-files-pills">
+              <!-- Rendered dynamically -->
+            </div>
+            <div class="preview-body">
+              <pre class="code-preview" id="gen-code-preview">Fill in the wizard details and click "Synthesize DNA Spec" to generate all 5 levels + plan, tasks, and AGENTS.md.</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 3: SPEC AUDITOR ================= -->
+      <section class="tab-panel" id="panel-auditor">
+        <div class="panel-header-row">
+          <div>
+            <h2 class="panel-title">DNA Spec Auditor & Health Meter</h2>
+            <p class="panel-subtitle">Validates whether a project satisfies all 5 levels of hierarchical DNA integrity.</p>
+          </div>
+          <button class="btn btn-primary" id="btn-run-audit">
+            <span class="btn-icon">🔍</span> Run Full Audit
+          </button>
+        </div>
+
+        <div class="auditor-dashboard-grid">
+          <!-- Score Card -->
+          <div class="audit-score-card card-glass">
+            <div class="score-circle-container">
+              <div class="score-circle" id="score-circle">
+                <span class="score-val" id="score-val">100%</span>
+                <span class="score-sub">COMPLIANCE</span>
+              </div>
+            </div>
+            <div class="score-meta">
+              <h3 class="score-status" id="score-status">Spec Fully Authoritative</h3>
+              <p class="score-desc" id="score-desc">All 5 levels, implementation plan, decomposed atomic tasks, and AGENTS.md memory verified.</p>
+            </div>
+          </div>
+
+          <!-- Rules Checklist -->
+          <div class="audit-checks-card card-glass">
+            <h3 class="card-title">Hierarchy Integrity Checks</h3>
+            <div class="checklist-container" id="audit-checklist">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 4: MINI CI/CD DIFF ================= -->
+      <section class="tab-panel" id="panel-diff">
+        <div class="panel-header-row">
+          <div>
+            <h2 class="panel-title">DNA Git Diff & Impact Simulator</h2>
+            <p class="panel-subtitle">Demonstrates the Mini CI/CD pipeline: when a spec changes in git, only affected tasks regenerate.</p>
+          </div>
+          <div class="diff-controls">
+            <select id="diff-scenario" class="select-input">
+              <option value="auth-feature">Feature Change: Add Real-Time Webhooks</option>
+              <option value="domain-boundary">Domain Change: Add Analytics Partition</option>
+              <option value="requirement-change">Requirement Change: Latency < 50ms Invariant</option>
+            </select>
+            <button class="btn btn-primary" id="btn-trigger-diff">
+              <span class="btn-icon">⚡</span> Run Mini CI/CD
+            </button>
+          </div>
+        </div>
+
+        <div class="diff-split-grid">
+          <!-- Left: Git Spec Diff -->
+          <div class="diff-card card-glass">
+            <div class="diff-card-header">
+              <span class="diff-card-title">1. Git Diff in \`dna/\`</span>
+              <span class="badge badge-emerald">Detected Change</span>
+            </div>
+            <div class="diff-card-body">
+              <pre class="code-preview diff-code" id="diff-git-output">Loading scenario...</pre>
+            </div>
+          </div>
+
+          <!-- Right: Downstream Impact & Regenerated Tasks -->
+          <div class="diff-card card-glass">
+            <div class="diff-card-header">
+              <span class="diff-card-title">2. Regenerated Implementation Tasks</span>
+              <span class="badge badge-purple" id="diff-impact-badge">3 Tasks Affected</span>
+            </div>
+            <div class="diff-card-body">
+              <div class="impact-summary-box" id="impact-summary">
+                Impact: Recalculated build sequence for affected milestones.
+              </div>
+              <div class="regenerated-tasks-list" id="regenerated-tasks-list">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 5: CLI & TERMINAL ================= -->
+      <section class="tab-panel" id="panel-cli">
+        <div class="panel-header-row">
+          <div>
+            <h2 class="panel-title">CLI Runner & Vitest Terminal</h2>
+            <p class="panel-subtitle">Execute installer commands and verify test suites with live console output.</p>
+          </div>
+          <div class="cli-actions">
+            <button class="btn btn-secondary btn-sm" id="btn-cli-help">
+              <span class="btn-icon">❓</span> dna-spec --help
+            </button>
+            <button class="btn btn-secondary btn-sm" id="btn-cli-dryrun">
+              <span class="btn-icon">📦</span> install --dry-run
+            </button>
+            <button class="btn btn-primary btn-sm" id="btn-cli-test">
+              <span class="btn-icon">🧪</span> npm test (Vitest)
+            </button>
+            <button class="btn btn-ghost btn-sm" id="btn-clear-term">
+              <span class="btn-icon">🧹</span> Clear
+            </button>
+          </div>
+        </div>
+
+        <div class="terminal-card card-glass">
+          <div class="terminal-bar">
+            <div class="terminal-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span class="terminal-title">bash — dna-spec-studio@0.1.0</span>
+            <div class="terminal-status" id="terminal-status">Ready</div>
+          </div>
+          <div class="terminal-body" id="terminal-body">
+            <div class="term-line term-dim">======================================================</div>
+            <div class="term-line term-cyan">🧬 DNA Spec Studio — Terminal Console Active</div>
+            <div class="term-line term-purple">👤 Author: sadhasri697</div>
+            <div class="term-line term-dim">Click any button above to execute backend commands.</div>
+            <div class="term-line term-dim">======================================================</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <span>DNA Spec Studio &copy; 2026</span>
+          <span class="footer-dot">&bull;</span>
+          <span>Created by <a href="https://github.com/sadhasri697/DNA-spec-main" target="_blank" rel="noopener noreferrer">sadhasri697</a></span>
+        </div>
+        <div class="footer-right">
+          <span class="badge badge-emerald">Specification-Driven Development</span>
+          <span class="badge badge-purple">Pi Coding Agent</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
